@@ -1,0 +1,63 @@
+/*
+Program name: style.css
+Author: Madiha Alam
+Date created: 06/18/2026
+Version: 1.0
+Description: CSS styling for CareBridge Medical Patient Registration Form
+*/
+
+body {
+background-color: #eaf4f4;
+font-family: Arial, Helvetica, sans-serif;
+color: #333333;
+margin: 0;
+padding: 0;
+}
+
+h1 {
+color: #005f73;
+text-align: center;
+}
+
+h2 {
+color: #0a9396;
+text-align: center;
+}
+
+#header {
+background-color: #94d2bd;
+padding: 20px;
+text-align: center;
+}
+
+#main {
+margin: 20px;
+}
+
+#footer {
+background-color: #94d2bd;
+padding: 15px;
+text-align: center;
+margin-top: 20px;
+}
+
+table {
+margin: auto;
+}
+
+td {
+padding: 8px;
+}
+
+a {
+color: blue;
+}
+
+a:visited {
+color: purple;
+}
+
+button {
+padding: 10px;
+margin: 5px;
+}

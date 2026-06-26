@@ -1,3 +1,7 @@
+window.onload = function () {
+    document.getElementById("todayDate").innerHTML =
+        new Date().toDateString();
+};
 function getValue(id) {
     var field = document.getElementById(id);
     return field ? field.value : "";

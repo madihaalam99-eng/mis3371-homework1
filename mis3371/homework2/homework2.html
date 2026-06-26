@@ -5,191 +5,158 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!--
-    Program name: patient-form.html
-    Author: Madiha Alam
-    Date created: 06/18/2026
-    Version: 1.0
-    Description: Patient Registration Form
-    -->
-
     <title>CareBridge Medical Patient Registration</title>
-
     <link rel="stylesheet" href="homework2.css">
 </head>
 
 <body>
 
-    <div id="header">
-        <h1>CareBridge Medical</h1>
+<div id="header">
+    <h1>CareBridge Medical</h1>
+    <p>Today's Date: <span id="todayDate"></span></p>
+</div>
 
-        <p>
-            Today's Date:
-            <script>
-                document.write(new Date().toDateString());
-            </script>
-        </p>
+<div id="main">
+    <h2>Patient Registration Form</h2>
+
+    <form id="patientForm" action="thankyou.html">
+        <table>
+            <tr>
+                <td>First Name:</td>
+                <td><input type="text" id="firstName" maxlength="30" title="Enter your first name"></td>
+
+                <td>MI:</td>
+                <td><input type="text" id="middleInitial" maxlength="1" title="Enter middle initial"></td>
+
+                <td>Last Name:</td>
+                <td><input type="text" id="lastName" maxlength="30" title="Enter your last name"></td>
+            </tr>
+
+            <tr>
+                <td>Date of Birth:</td>
+                <td><input type="text" id="dob" placeholder="MM/DD/YYYY" title="Enter your date of birth"></td>
+
+                <td>SSN:</td>
+                <td><input type="password" id="ssn" maxlength="11" title="Enter your Social Security Number"></td>
+            </tr>
+
+            <tr>
+                <td>Address 1:</td>
+                <td colspan="5"><input type="text" id="address1" size="50" title="Enter your street address"></td>
+            </tr>
+
+            <tr>
+                <td>Address 2:</td>
+                <td colspan="5"><input type="text" id="address2" size="50" title="Enter apartment, suite, or unit number"></td>
+            </tr>
+
+            <tr>
+                <td>City:</td>
+                <td><input type="text" id="city" title="Enter your city"></td>
+
+                <td>State:</td>
+                <td>
+                    <select id="state" title="Select your state">
+                        <option value="">Select</option>
+                        <option value="TX">TX</option>
+                        <option value="CA">CA</option>
+                        <option value="NY">NY</option>
+                        <option value="FL">FL</option>
+                    </select>
+                </td>
+
+                <td>Zip:</td>
+                <td><input type="text" id="zip" title="Enter your ZIP code"></td>
+            </tr>
+
+            <tr>
+                <td>Email:</td>
+                <td colspan="5"><input type="email" id="email" size="40" title="Enter your email address"></td>
+            </tr>
+
+            <tr>
+                <td>Symptoms:</td>
+                <td colspan="5"><textarea id="symptoms" rows="4" cols="50" title="Describe your symptoms"></textarea></td>
+            </tr>
+
+            <tr>
+                <td>Gender:</td>
+                <td colspan="5">
+                    <input type="radio" id="male" name="gender" value="Male" title="Select Male"> Male
+                    <input type="radio" id="female" name="gender" value="Female" title="Select Female"> Female
+                    <input type="radio" id="other" name="gender" value="Other" title="Select Other"> Other
+                </td>
+            </tr>
+
+            <tr>
+                <td>Vaccinated:</td>
+                <td colspan="5">
+                    <input type="radio" id="vaccinatedYes" name="vaccinated" value="Yes" title="Select Yes"> Yes
+                    <input type="radio" id="vaccinatedNo" name="vaccinated" value="No" title="Select No"> No
+                </td>
+            </tr>
+
+            <tr>
+                <td>Insurance:</td>
+                <td colspan="5">
+                    <input type="radio" id="insuranceYes" name="insurance" value="Yes" title="Select Yes"> Yes
+                    <input type="radio" id="insuranceNo" name="insurance" value="No" title="Select No"> No
+                </td>
+            </tr>
+
+            <tr>
+                <td>Medical History:</td>
+                <td colspan="5">
+                    <input type="checkbox" id="diabetes"> Diabetes
+                    <input type="checkbox" id="asthma"> Asthma
+                    <input type="checkbox" id="heartDisease"> Heart Disease
+                </td>
+            </tr>
+
+            <tr>
+                <td>Health Rating:</td>
+                <td colspan="5">
+                    <input type="range" id="healthRating" min="1" max="10" value="5" oninput="showRating()">
+                    <span id="ratingValue">5</span>
+                </td>
+            </tr>
+
+            <tr>
+                <td>User ID:</td>
+                <td><input type="text" id="userId" title="Enter your user ID"></td>
+            </tr>
+
+            <tr>
+                <td>Password:</td>
+                <td><input type="password" id="password" title="Enter your password"></td>
+            </tr>
+
+            <tr>
+                <td>Confirm Password:</td>
+                <td><input type="password" id="confirmPassword" title="Confirm your password"></td>
+            </tr>
+
+            <tr>
+                <td colspan="6" align="center">
+                    <input type="button" value="Review" onclick="reviewForm()">
+                    <input type="submit" value="Submit Form">
+                    <input type="reset" value="Start Over">
+                </td>
+            </tr>
+        </table>
+    </form>
+
+    <div id="reviewArea">
+        <h2>PLEASE REVIEW THIS INFORMATION</h2>
+        <div id="reviewOutput"></div>
     </div>
-
-    <div id="main">
-
-        <h2>Patient Registration Form</h2>
-
-       <form action="thankyou.html">
-
-<table>
-
-<tr>
-    <td>First Name:</td>
-   <input type="text" id="firstName" maxlength="30" title="Enter your first name">
-<td>MI:</td>
-<input type="text" id="middleInitial" maxlength="1" title="Enter middle initial">
-
-<td>Last Name:</td>
-<input type="text" id="lastName" maxlength="30" title="Enter your last name">
-
-
-</tr>
-
-<tr>
-    <td>Date of Birth:</td>
-<input type="text" id="dob" placeholder="MM/DD/YYYY" title="Enter your date of birth">
-
-<td>SSN:</td>
-<input type="password" id="ssn" maxlength="11" title="Enter your Social Security Number">
-
-</tr>
-
-<tr>
-    <td>Address 1:</td>
-<td colspan="5">
-    <input type="text" id="address1" size="50" title="Enter your street address">
-</td>
-    </tr>
-    <tr>
-    <td>Address 2:</td>
-<input type="text" id="address2" size="50" title="Enter apartment, suite, or unit number"></tr>
-
-<tr>
-    <td>City:</td>
-<input type="text" id="city" title="Enter your city">
-
-<td>State:</td>
-<td>
-    <select id="state" title="Select your state">
-        <option>TX</option>
-        <option>CA</option>
-        <option>NY</option>
-        <option>FL</option>
-    </select>
-</td>
-<td>Zip:</td>
-<input type="text" id="zip" title="Enter your ZIP code">
-
-</tr>
-
-<tr>
-    <td>Email:</td>
-    <td colspan="5">
-        <input type="email" id="email" size="40" title="Enter your email address">
-    </td>
-</tr>
-<tr>
-<tr>
-    <td>Symptoms:</td>
-    <td colspan="5">
-<textarea id="symptoms" rows="4" cols="50" title="Describe your symptoms"></textarea>    </td>
-</tr>
-
-<tr>
-    <td>Gender:</td>
-    <td colspan="5">
-        <input type="radio" id="male" name="gender" value="Male" title="Select Male"> Male
-
-<input type="radio" id="female" name="gender" value="Female" title="Select Female"> Female
-
-<input type="radio" id="other" name="gender" value="Other" title="Select Other"> Other
-    </td>
-</tr>
-
-<tr>
-  <input type="radio" id="vaccinatedYes" name="vaccinated" value="Yes" title="Select Yes"> Yes
-
-<input type="radio" id="vaccinatedNo" name="vaccinated" value="No" title="Select No"> No
-        
-    </td>
-</tr>
-<tr>
-    <td>Insurance:</td>
-    <td colspan="5">
-<input type="radio" id="insuranceYes" name="insurance" value="Yes" title="Select Yes"> Yes
-
-<input type="radio" id="insuranceNo" name="insurance" value="No" title="Select No"> No
-
-    </td>
-</tr>
-</tr>
-
-<tr>
-    <td>Medical History:</td>
-    <td colspan="5">
-        <input type="checkbox"> Diabetes
-        <input type="checkbox"> Asthma
-        <input type="checkbox"> Heart Disease
-    </td>
-</tr>
-
-<tr>
-    <td>Health Rating:</td>
-    <td colspan="5"> 
-        <input type="range" min="1" max="10"> 
-    </td>
-</tr>
-
-<tr>
-    <td>User ID:</td>
-    <td><input type="text"></td>
-</tr>
-
-<tr>
-    <td>Password:</td>
-    <td><input type="password"></td>
-</tr>
-
-<tr>
-    <td>Confirm Password:</td>
-    <td><input type="password"></td>
-</tr>
-
-<tr>
-    <td colspan="6" align="center">
-        <input type="reset" value="Clear Form">
-        <input type="submit" value="Submit Form">
-    </td>
-</tr>
-
-</table>
-</form>
-
-<div class="button-area">
-    <input type="button" value="Review" onclick="reviewForm()">
-    <input type="submit" value="Submit">
-    <input type="reset" value="Start Over">
 </div>
 
-<div id="reviewArea">
-    <h2>PLEASE REVIEW THIS INFORMATION</h2>
-    <div id="reviewOutput"></div>
+<div id="footer">
+    <button>Contact Us</button>
 </div>
-
-</div>
-
-    <div id="footer">
-        <button>Contact Us</button>
-    </div>
 
 <script src="homework2.js"></script>
 
 </body>
-
 </html>

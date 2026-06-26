@@ -1,1 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!--
+    Program name: patient-form.html
+    Author: Madiha Alam
+    Date created: 06/18/2026
+    Version: 1.0
+    Description: Patient Registration Form
+    -->
+
+    <title>CareBridge Medical Patient Registration</title>
+
+    <link rel="stylesheet" href="homework2.css">
+</head>
+
+<body>
+
+    <div id="header">
+        <h1>CareBridge Medical</h1>
+
+        <p>
+            Today's Date:
+            <script>
+                document.write(new Date().toDateString());
+            </script>
+        </p>
+    </div>
+
+    <div id="main">
+
+        <h2>Patient Registration Form</h2>
+
+       <form action="thankyou.html">
+
+<table>
+
+<tr>
+    <td>First Name:</td>
+    <td><input type="text" maxlength="30"></td>
+
+<td>MI:</td>
+<td><input type="text" maxlength="1"></td>
+
+<td>Last Name:</td>
+<td><input type="text" maxlength="30"></td>
+
+
+</tr>
+
+<tr>
+    <td>Date of Birth:</td>
+    <td><input type="text" placeholder="MM/DD/YYYY"></td>
+
+
+<td>SSN:</td>
+<td><input type="password" maxlength="11"></td>
+
+
+</tr>
+
+<tr>
+    <td>Address 1:</td>
+    <td colspan="5"><input type="text" size="50"></td>
+</tr>
+
+<tr>
+    <td>Address 2:</td>
+    <td colspan="5"><input type="text" size="50"></td>
+</tr>
+
+<tr>
+    <td>City:</td>
+    <td><input type="text"></td>
+
+
+<td>State:</td>
+<td>
+    <select>
+        <option>TX</option>
+        <option>CA</option>
+        <option>NY</option>
+        <option>FL</option>
+    </select>
+</td>
+
+<td>Zip:</td>
+<td><input type="text"></td>
+
+
+</tr>
+
+<tr>
+    <td>Email:</td>
+    <td colspan="5">
+        <input type="email" size="40">
+    </td>
+</tr>
+<tr>
+    <td>Symptoms:</td>
+    <td colspan="5">
+        <textarea rows="4" cols="50"></textarea>
+    </td>
+</tr>
+
+<tr>
+    <td>Gender:</td>
+    <td colspan="5">
+        <input type="radio" name="gender"> Male
+        <input type="radio" name="gender"> Female
+        <input type="radio" name="gender"> Other
+    </td>
+</tr>
+
+<tr>
+    <td>Vaccinated:</td>
+    <td colspan="5">
+        <input type="radio" name="vaccinated"> Yes
+        <input type="radio" name="vaccinated"> No
+    </td>
+</tr>
+
+<tr>
+    <td>Insurance:</td>
+    <td colspan="5">
+        <input type="radio" name="insurance"> Yes
+        <input type="radio" name="insurance"> No
+    </td>
+</tr>
+
+<tr>
+    <td>Medical History:</td>
+    <td colspan="5">
+        <input type="checkbox"> Diabetes
+        <input type="checkbox"> Asthma
+        <input type="checkbox"> Heart Disease
+    </td>
+</tr>
+
+<tr>
+    <td>Health Rating:</td>
+    <td colspan="5"> 
+        <input type="range" min="1" max="10"> 
+    </td>
+</tr>
+
+<tr>
+    <td>User ID:</td>
+    <td><input type="text"></td>
+</tr>
+
+<tr>
+    <td>Password:</td>
+    <td><input type="password"></td>
+</tr>
+
+<tr>
+    <td>Confirm Password:</td>
+    <td><input type="password"></td>
+</tr>
+
+<tr>
+    <td colspan="6" align="center">
+        <input type="reset" value="Clear Form">
+        <input type="submit" value="Submit Form">
+    </td>
+</tr>
+
+</table>
+</form>
+
+<div class="button-area">
+    <input type="button" value="Review" onclick="reviewForm()">
+    <input type="submit" value="Submit">
+    <input type="reset" value="Start Over">
+</div>
+
+<div id="reviewArea">
+    <h2>PLEASE REVIEW THIS INFORMATION</h2>
+    <div id="reviewOutput"></div>
+</div>
+
+</div>
+
+    <div id="footer">
+        <button>Contact Us</button>
+    </div>
+
+<script src="homework2.js"></script>
+
+</body>
+
+</html>

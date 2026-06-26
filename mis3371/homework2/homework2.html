@@ -41,95 +41,93 @@
 
 <tr>
     <td>First Name:</td>
-    <td><input type="text" maxlength="30"></td>
-
+   <input type="text" id="firstName" maxlength="30" title="Enter your first name">
 <td>MI:</td>
-<td><input type="text" maxlength="1"></td>
+<input type="text" id="middleInitial" maxlength="1" title="Enter middle initial">
 
 <td>Last Name:</td>
-<td><input type="text" maxlength="30"></td>
+<input type="text" id="lastName" maxlength="30" title="Enter your last name">
 
 
 </tr>
 
 <tr>
     <td>Date of Birth:</td>
-    <td><input type="text" placeholder="MM/DD/YYYY"></td>
-
+<input type="text" id="dob" placeholder="MM/DD/YYYY" title="Enter your date of birth">
 
 <td>SSN:</td>
-<td><input type="password" maxlength="11"></td>
-
+<input type="password" id="ssn" maxlength="11" title="Enter your Social Security Number">
 
 </tr>
 
 <tr>
     <td>Address 1:</td>
-    <td colspan="5"><input type="text" size="50"></td>
-</tr>
-
-<tr>
+<td colspan="5">
+    <input type="text" id="address1" size="50" title="Enter your street address">
+</td>
+    </tr>
+    <tr>
     <td>Address 2:</td>
-    <td colspan="5"><input type="text" size="50"></td>
-</tr>
+<input type="text" id="address2" size="50" title="Enter apartment, suite, or unit number"></tr>
 
 <tr>
     <td>City:</td>
-    <td><input type="text"></td>
-
+<input type="text" id="city" title="Enter your city">
 
 <td>State:</td>
 <td>
-    <select>
+    <select id="state" title="Select your state">
         <option>TX</option>
         <option>CA</option>
         <option>NY</option>
         <option>FL</option>
     </select>
 </td>
-
 <td>Zip:</td>
-<td><input type="text"></td>
-
+<input type="text" id="zip" title="Enter your ZIP code">
 
 </tr>
 
 <tr>
     <td>Email:</td>
     <td colspan="5">
-        <input type="email" size="40">
+        <input type="email" id="email" size="40" title="Enter your email address">
     </td>
 </tr>
 <tr>
+<tr>
     <td>Symptoms:</td>
     <td colspan="5">
-        <textarea rows="4" cols="50"></textarea>
-    </td>
+<textarea id="symptoms" rows="4" cols="50" title="Describe your symptoms"></textarea>    </td>
 </tr>
 
 <tr>
     <td>Gender:</td>
     <td colspan="5">
-        <input type="radio" name="gender"> Male
-        <input type="radio" name="gender"> Female
-        <input type="radio" name="gender"> Other
+        <input type="radio" id="male" name="gender" value="Male" title="Select Male"> Male
+
+<input type="radio" id="female" name="gender" value="Female" title="Select Female"> Female
+
+<input type="radio" id="other" name="gender" value="Other" title="Select Other"> Other
     </td>
 </tr>
 
 <tr>
-    <td>Vaccinated:</td>
-    <td colspan="5">
-        <input type="radio" name="vaccinated"> Yes
-        <input type="radio" name="vaccinated"> No
+  <input type="radio" id="vaccinatedYes" name="vaccinated" value="Yes" title="Select Yes"> Yes
+
+<input type="radio" id="vaccinatedNo" name="vaccinated" value="No" title="Select No"> No
+        
     </td>
 </tr>
-
 <tr>
     <td>Insurance:</td>
     <td colspan="5">
-        <input type="radio" name="insurance"> Yes
-        <input type="radio" name="insurance"> No
+<input type="radio" id="insuranceYes" name="insurance" value="Yes" title="Select Yes"> Yes
+
+<input type="radio" id="insuranceNo" name="insurance" value="No" title="Select No"> No
+
     </td>
+</tr>
 </tr>
 
 <tr>

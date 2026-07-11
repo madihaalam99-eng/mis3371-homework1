@@ -4,6 +4,8 @@ window.onload = function () {
 
     showRating();
     hideSubmitButton();
+    
+    loadStates();
 };
 
 function getField(id) {

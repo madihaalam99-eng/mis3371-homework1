@@ -1,1 +1,215 @@
+/*
+Program name: homework4.css
+Author: Madiha Alam
+Date created: 07/10/2026
+Version: 1.0
+Description: CSS styling for CareBridge Medical Patient Registration Form
+*/
 
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #eaf4f4;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #333333;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    color: #005f73;
+    text-align: center;
+    margin: 0;
+}
+
+h2 {
+    color: #0a9396;
+    text-align: center;
+}
+
+#header {
+    background-color: #94d2bd;
+    padding: 20px;
+    text-align: center;
+}
+
+#main {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+}
+
+#footer {
+    background-color: #94d2bd;
+    padding: 15px;
+    text-align: center;
+    margin-top: 20px;
+}
+
+form {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: auto;
+}
+
+td {
+    padding: 10px;
+    vertical-align: top;
+}
+
+label {
+    font-weight: bold;
+}
+
+input,
+select,
+textarea {
+    padding: 7px;
+    border: 1px solid #888888;
+    border-radius: 4px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+select,
+textarea {
+    max-width: 100%;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    outline: 2px solid #0a9396;
+    border-color: #0a9396;
+}
+
+input[type="radio"],
+input[type="checkbox"] {
+    margin-right: 4px;
+}
+
+input[type="button"],
+input[type="submit"],
+input[type="reset"],
+button {
+    padding: 10px 16px;
+    margin: 5px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #0a9396;
+    color: white;
+    font-weight: bold;
+}
+
+input[type="button"]:hover,
+input[type="submit"]:hover,
+input[type="reset"]:hover,
+button:hover {
+    background-color: #005f73;
+}
+
+input[type="submit"]:disabled {
+    background-color: #999999;
+    cursor: not-allowed;
+}
+
+.button-cell {
+    text-align: center;
+}
+
+.error-message {
+    display: block;
+    min-height: 18px;
+    margin-top: 4px;
+    color: #b00020;
+    font-size: 0.85rem;
+    font-weight: bold;
+}
+
+.valid-field {
+    border: 2px solid #2e7d32;
+}
+
+.invalid-field {
+    border: 2px solid #b00020;
+}
+
+#formStatus {
+    min-height: 24px;
+    text-align: center;
+    font-weight: bold;
+    margin: 15px 0;
+}
+
+.success-message {
+    color: #2e7d32;
+}
+
+.status-error {
+    color: #b00020;
+}
+
+#reviewArea {
+    background-color: white;
+    border: 2px solid #94d2bd;
+    border-radius: 8px;
+    margin-top: 25px;
+    padding: 20px;
+}
+
+#reviewOutput table {
+    width: 100%;
+}
+
+#reviewOutput td {
+    border-bottom: 1px solid #cccccc;
+}
+
+#ratingValue {
+    display: inline-block;
+    min-width: 25px;
+    margin-left: 10px;
+    font-weight: bold;
+    color: #005f73;
+}
+
+a {
+    color: blue;
+}
+
+a:visited {
+    color: purple;
+}
+
+@media screen and (max-width: 800px) {
+    table,
+    tbody,
+    tr,
+    td {
+        display: block;
+        width: 100%;
+    }
+
+    td {
+        padding: 6px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    select,
+    textarea {
+        width: 100%;
+    }
+}

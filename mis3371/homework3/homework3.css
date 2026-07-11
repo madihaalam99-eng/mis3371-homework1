@@ -1,7 +1,7 @@
 /*
-Program name: homework3.css
+Program name: homework4.css
 Author: Madiha Alam
-Date created: 07/10/2026
+Date created: 07/11/2026
 Version: 1.0
 Description: CSS styling for CareBridge Medical Patient Registration Form
 */
@@ -29,23 +29,33 @@ h2 {
     text-align: center;
 }
 
+/* Fixed Header */
 #header {
     background-color: #94d2bd;
     padding: 20px;
     text-align: center;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
 }
 
 #main {
     max-width: 1200px;
-    margin: 20px auto;
+    margin: 0 auto;
+    margin-top: 170px;
+    margin-bottom: 90px;
     padding: 20px;
 }
 
+/* Fixed Footer */
 #footer {
     background-color: #94d2bd;
     padding: 15px;
     text-align: center;
-    margin-top: 20px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
 }
 
 form {

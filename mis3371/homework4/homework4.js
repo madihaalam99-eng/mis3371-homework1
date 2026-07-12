@@ -880,5 +880,371 @@ document.addEventListener("DOMContentLoaded", function () {
                 event.preventDefault();
             }
         });
+        /***************************************************
+HOMEWORK 4 — FETCH API, COOKIES, AND REMEMBER ME
+***************************************************/
+
+/*
+Fetches the state <option> elements from states.txt
+and places them inside the State dropdown.
+*/
+async function loadStates() {
+    const stateDropdown = getField("state");
+
+    if (!stateDropdown) {
+        return;
+    }
+
+    try {
+        const response = await fetch("states.txt");
+
+        if (!response.ok) {
+            throw new Error(
+                "Unable to load states. Status: " +
+                response.status
+            );
+        }
+
+        const stateOptions = await response.text();
+
+        stateDropdown.innerHTML = stateOptions;
+
+        /*
+        Part 2 will use this saved value when restoring
+        the user's form after the states finish loading.
+        */
+        const savedState =
+            localStorage.getItem("carebridge_state");
+
+        if (savedState) {
+            stateDropdown.value = savedState;
+        }
+    } catch (error) {
+        console.error("Fetch API error:", error);
+
+        stateDropdown.innerHTML =
+            '<option value="">States could not be loaded</option>';
+
+        const stateError = getField("stateError");
+
+        if (stateError) {
+            stateError.textContent =
+                "The state list could not be loaded. Please refresh the page.";
+        }
+    }
+}
+
+/*
+Creates or updates a cookie.
+
+The cookie expires in 48 hours, as required by
+the Homework 4 instructions.
+*/
+function setCookie(cookieName, cookieValue, hours) {
+    const expirationDate = new Date();
+
+    expirationDate.setTime(
+        expirationDate.getTime() +
+        hours * 60 * 60 * 1000
+    );
+
+    document.cookie =
+        encodeURIComponent(cookieName) +
+        "=" +
+        encodeURIComponent(cookieValue) +
+        "; expires=" +
+        expirationDate.toUTCString() +
+        "; path=/; SameSite=Lax";
+}
+
+/*
+Reads a cookie and returns its stored value.
+*/
+function getCookie(cookieName) {
+    const encodedName =
+        encodeURIComponent(cookieName) + "=";
+
+    const cookies = document.cookie.split(";");
+
+    for (let i = 0; i < cookies.length; i++) {
+        let currentCookie = cookies[i].trim();
+
+        if (currentCookie.indexOf(encodedName) === 0) {
+            return decodeURIComponent(
+                currentCookie.substring(
+                    encodedName.length
+                )
+            );
+        }
+    }
+
+    return "";
+}
+
+/*
+Expires and removes a cookie.
+*/
+function deleteCookie(cookieName) {
+    document.cookie =
+        encodeURIComponent(cookieName) +
+        "=; expires=Thu, 01 Jan 1970 00:00:00 UTC;" +
+        " path=/; SameSite=Lax";
+}
+
+/*
+Displays either:
+
+Welcome New User
+
+or:
+
+Welcome back, FirstName
+*/
+function updateWelcomeMessage() {
+    const welcomeMessage =
+        getField("welcomeMessage");
+
+    const rememberedName =
+        getCookie("carebridgeFirstName");
+
+    if (!welcomeMessage) {
+        return;
+    }
+
+    if (rememberedName) {
+        welcomeMessage.textContent =
+            "Welcome back, " + rememberedName + "!";
+
+        createNewUserOption(rememberedName);
+    } else {
+        welcomeMessage.textContent =
+            "Welcome New User";
+
+        clearNewUserArea();
+    }
+}
+
+/*
+Dynamically creates:
+
+Not FirstName? Click here to start as a new user.
+*/
+function createNewUserOption(firstName) {
+    const newUserArea =
+        getField("newUserArea");
+
+    if (!newUserArea) {
+        return;
+    }
+
+    newUserArea.innerHTML = "";
+
+    const label =
+        document.createElement("label");
+
+    const checkbox =
+        document.createElement("input");
+
+    checkbox.type = "checkbox";
+    checkbox.id = "notRememberedUser";
+
+    checkbox.addEventListener(
+        "change",
+        function () {
+            if (checkbox.checked) {
+                startAsNewUser();
+            }
+        }
+    );
+
+    label.appendChild(checkbox);
+
+    label.appendChild(
+        document.createTextNode(
+            " Not " +
+            firstName +
+            "? Click here to start as a new user."
+        )
+    );
+
+    newUserArea.appendChild(label);
+}
+
+/*
+Removes the dynamic New User checkbox/message.
+*/
+function clearNewUserArea() {
+    const newUserArea =
+        getField("newUserArea");
+
+    if (newUserArea) {
+        newUserArea.innerHTML = "";
+    }
+}
+
+/*
+Saves the first-name cookie when Remember Me
+is selected.
+
+The first name is stored for no more than 48 hours.
+*/
+function saveRememberedUser() {
+    const rememberMe =
+        getField("rememberMe");
+
+    const firstName =
+        getValue("firstName");
+
+    if (
+        rememberMe &&
+        rememberMe.checked &&
+        firstName !== ""
+    ) {
+        setCookie(
+            "carebridgeFirstName",
+            firstName,
+            48
+        );
+
+        updateWelcomeMessage();
+    }
+}
+
+/*
+Handles the Remember Me checkbox.
+
+If selected:
+- saves the first-name cookie
+- Part 2 will save the other non-secure form fields
+
+If unselected:
+- deletes the cookie
+- deletes saved local-storage data
+*/
+function handleRememberMe() {
+    const rememberMe =
+        getField("rememberMe");
+
+    if (!rememberMe) {
+        return;
+    }
+
+    if (rememberMe.checked) {
+        saveRememberedUser();
+
+        if (
+            typeof saveFormToLocalStorage ===
+            "function"
+        ) {
+            saveFormToLocalStorage();
+        }
+    } else {
+        deleteCookie("carebridgeFirstName");
+
+        if (
+            typeof clearSavedFormData ===
+            "function"
+        ) {
+            clearSavedFormData();
+        }
+
+        updateWelcomeMessage();
+    }
+}
+
+/*
+Clears the cookie, local storage, and form so a
+different person can begin using the page.
+*/
+function startAsNewUser() {
+    const form =
+        getField("patientForm");
+
+    deleteCookie("carebridgeFirstName");
+
+    if (
+        typeof clearSavedFormData ===
+        "function"
+    ) {
+        clearSavedFormData();
+    }
+
+    if (form) {
+        form.reset();
+    }
+
+    const rememberMe =
+        getField("rememberMe");
+
+    if (rememberMe) {
+        rememberMe.checked = true;
+    }
+
+    resetFormMessages();
+    clearNewUserArea();
+    updateWelcomeMessage();
+
+    const firstName =
+        getField("firstName");
+
+    if (firstName) {
+        firstName.focus();
+    }
+}
+
+/*
+Sets up the cookie and Remember Me behavior after
+the HTML has loaded.
+*/
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+        const rememberedName =
+            getCookie("carebridgeFirstName");
+
+        const firstName =
+            getField("firstName");
+
+        const rememberMe =
+            getField("rememberMe");
+
+        /*
+        Prefill the First Name field from the cookie.
+        */
+        if (
+            rememberedName &&
+            firstName
+        ) {
+            firstName.value =
+                rememberedName;
+        }
+
+        updateWelcomeMessage();
+
+        /*
+        Save the cookie when the user leaves
+        the First Name field.
+        */
+        if (firstName) {
+            firstName.addEventListener(
+                "blur",
+                function () {
+                    saveRememberedUser();
+                }
+            );
+        }
+
+        /*
+        Respond when Remember Me is checked
+        or unchecked.
+        */
+        if (rememberMe) {
+            rememberMe.addEventListener(
+                "change",
+                handleRememberMe
+            );
+        }
+    }
+);
     }
 });

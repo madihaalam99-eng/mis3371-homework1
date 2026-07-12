@@ -1,13 +1,3 @@
-window.onload = function () {
-    document.getElementById("todayDate").textContent =
-        new Date().toDateString();
-
-    showRating();
-    hideSubmitButton();
-    
-    loadStates();
-};
-
 function getField(id) {
     return document.getElementById(id);
 }
@@ -871,13 +861,226 @@ function resetFormMessages() {
     }, 0);
 }
 
-document.addEventListener("DOMContentLoaded", function () {
-    const form = getField("patientForm");
+/***************************************************
+HOMEWORK 4 FEATURES
+Fetch API, cookies, and local storage
+***************************************************/
 
+async function loadStates() {
+    const stateDropdown = getField("state");
+    if (!stateDropdown) return;
+
+    try {
+        const response = await fetch("states.txt", { cache: "no-store" });
+        if (!response.ok) {
+            throw new Error("Unable to load the state list.");
+        }
+
+        const stateOptions = await response.text();
+        stateDropdown.innerHTML = stateOptions;
+    } catch (error) {
+        console.error(error);
+        stateDropdown.innerHTML =
+            '<option value="">Unable to load states</option>';
+    }
+}
+
+function setCookie(name, value, days) {
+    const expires = new Date();
+    expires.setTime(expires.getTime() + days * 24 * 60 * 60 * 1000);
+    document.cookie =
+        encodeURIComponent(name) + "=" + encodeURIComponent(value) +
+        ";expires=" + expires.toUTCString() + ";path=/;SameSite=Lax";
+}
+
+function getCookie(name) {
+    const target = encodeURIComponent(name) + "=";
+    const cookies = document.cookie.split(";");
+
+    for (let cookie of cookies) {
+        cookie = cookie.trim();
+        if (cookie.indexOf(target) === 0) {
+            return decodeURIComponent(cookie.substring(target.length));
+        }
+    }
+    return "";
+}
+
+function deleteCookie(name) {
+    document.cookie =
+        encodeURIComponent(name) +
+        "=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/;SameSite=Lax";
+}
+
+function updateWelcomeMessage() {
+    const welcome = getField("welcomeMessage");
+    const newUserArea = getField("newUserArea");
+    const savedName = getCookie("carebridgeFirstName");
+
+    if (!welcome || !newUserArea) return;
+
+    if (savedName) {
+        welcome.textContent = "Welcome back, " + savedName + "!";
+        newUserArea.innerHTML =
+            '<button type="button" id="newUserButton">Not ' +
+            escapeHTML(savedName) + '? Start as a new user</button>';
+
+        const button = getField("newUserButton");
+        if (button) button.addEventListener("click", startNewUser);
+    } else {
+        welcome.textContent = "Welcome! Please complete the registration form.";
+        newUserArea.innerHTML = "";
+    }
+}
+
+function saveRememberedUser() {
+    const remember = getField("rememberMe");
+    const firstName = getValue("firstName");
+
+    if (remember && remember.checked && firstName) {
+        setCookie("carebridgeFirstName", firstName, 30);
+    } else {
+        deleteCookie("carebridgeFirstName");
+    }
+
+    updateWelcomeMessage();
+}
+
+function startNewUser() {
+    deleteCookie("carebridgeFirstName");
+    localStorage.removeItem("carebridgeFormData");
+
+    const form = getField("patientForm");
+    if (form) form.reset();
+
+    resetFormMessages();
+    updateWelcomeMessage();
+}
+
+function collectSafeFormData() {
+    const data = {
+        firstName: getValue("firstName"),
+        middleInitial: getValue("middleInitial"),
+        lastName: getValue("lastName"),
+        dob: getValue("dob"),
+        address1: getValue("address1"),
+        address2: getValue("address2"),
+        city: getValue("city"),
+        state: getValue("state"),
+        zip: getValue("zip"),
+        email: getValue("email"),
+        symptoms: getValue("symptoms"),
+        gender: getRadioValue("gender"),
+        vaccinated: getRadioValue("vaccinated"),
+        healthRating: getValue("healthRating"),
+        userId: getValue("userId"),
+        medicalHistory: []
+    };
+
+    document.querySelectorAll('input[name="medicalHistory"]:checked')
+        .forEach(function (box) {
+            data.medicalHistory.push(box.value);
+        });
+
+    return data;
+}
+
+function saveFormToLocalStorage() {
+    try {
+        localStorage.setItem(
+            "carebridgeFormData",
+            JSON.stringify(collectSafeFormData())
+        );
+    } catch (error) {
+        console.error("Local storage is unavailable:", error);
+    }
+}
+
+function restoreFormFromLocalStorage() {
+    let data;
+
+    try {
+        const saved = localStorage.getItem("carebridgeFormData");
+        if (!saved) return;
+        data = JSON.parse(saved);
+    } catch (error) {
+        console.error("Saved form data could not be restored:", error);
+        return;
+    }
+
+    const textFields = [
+        "firstName", "middleInitial", "lastName", "dob", "address1",
+        "address2", "city", "state", "zip", "email", "symptoms",
+        "healthRating", "userId"
+    ];
+
+    textFields.forEach(function (id) {
+        const field = getField(id);
+        if (field && data[id] !== undefined) field.value = data[id];
+    });
+
+    ["gender", "vaccinated"].forEach(function (name) {
+        if (!data[name] || data[name] === "Not selected") return;
+        const radio = document.querySelector(
+            'input[name="' + name + '"][value="' + CSS.escape(data[name]) + '"]'
+        );
+        if (radio) radio.checked = true;
+    });
+
+    if (Array.isArray(data.medicalHistory)) {
+        document.querySelectorAll('input[name="medicalHistory"]')
+            .forEach(function (box) {
+                box.checked = data.medicalHistory.includes(box.value);
+            });
+    }
+
+    showRating();
+}
+
+function enableAutomaticLocalStorage() {
+    const form = getField("patientForm");
+    if (!form) return;
+
+    form.addEventListener("input", function (event) {
+        if (event.target.id !== "password" &&
+            event.target.id !== "confirmPassword" &&
+            event.target.id !== "ssn") {
+            saveFormToLocalStorage();
+        }
+    });
+
+    form.addEventListener("change", saveFormToLocalStorage);
+}
+
+async function initializeHomework4() {
+    const todayDate = getField("todayDate");
+    if (todayDate) todayDate.textContent = new Date().toDateString();
+
+    await loadStates();
+    restoreFormFromLocalStorage();
+    updateWelcomeMessage();
+    showRating();
+    hideSubmitButton();
+    enableAutomaticLocalStorage();
+
+    const form = getField("patientForm");
     if (form) {
         form.addEventListener("submit", function (event) {
             if (!validateForm()) {
                 event.preventDefault();
+                return;
             }
+
+            saveRememberedUser();
+            localStorage.removeItem("carebridgeFormData");
         });
-        /***************************************************
+
+        form.addEventListener("reset", function () {
+            localStorage.removeItem("carebridgeFormData");
+        });
+    }
+}
+
+document.addEventListener("DOMContentLoaded", initializeHomework4);
+
+
